@@ -12,11 +12,11 @@ def accuracy(predictions: NDArray[np.float32], targets: NDArray[np.float32]) -> 
     Computes categorical accuracy.
 
     Args:
-        predictions (torch.Tensor): Logits of shape (batch, categories).
-        targets (torch.Tensor): One-hot encoded ground truth labels of shape (batch, categories).
+        predictions (NDArray): Logits of shape (batch, categories).
+        targets (NDArray): One-hot encoded ground truth labels of shape (batch, categories).
 
     Returns:
-        torch.Tensor: Scalar accuracy value.
+        NDArray: Scalar accuracy value.
     """
     bs = predictions.shape[0]
     pred_index = get_predicted_label(predictions)
