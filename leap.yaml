@@ -1,0 +1,18 @@
+codeIntegrationId: 67f65898e72bba00afd0f8c2
+projectId: 67f6586be72bba00afd0f8bc
+secretId: ""
+entryFile: leap_binder.py
+include:
+    - leap_binder.py
+    - leap_config.py
+    - leap_config.yaml
+    - leap_data_utils.py
+    - leap_visualizers.py
+    - leap_metadata.py
+    - leap_metrics.py
+    - kinetics_classes.py
+    - requirements.txt
+    - pytorchvideo/*.py
+    - pytorchvideo/**/*.py
+    - pytorchvideo/**/**/*.py
+pythonVersion: py38

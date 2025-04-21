@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "pytorchvideo"
+version = "0.1.0"
+description = ""
+authors = ["Amit Cohen <amit.cohen@tensorleap.ai>"]
+readme = "README.md"
+packages = [{ include = "pytorchvideo" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+torch = "2.1.0"
+torchvision = "0.16.0"
+iopath = "*"
+av = "*"
+scikit-image = "*"
+requests = "*"
+tensorflow-macos = "2.13.0"
+code-loader = "^1.0.75"
+code-loader-helpers = "^1.0.20"
+onnx = "1.13.0"
+onnxruntime = "1.13.x"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

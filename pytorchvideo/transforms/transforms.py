@@ -269,6 +269,28 @@ class MoveChannelFront(torch.nn.Module):
         return x
 
 
+class Resize(torch.nn.Module):
+    """
+    ``nn.Module`` wrapper for ``pytorchvideo_tensorleap.pytorchvideo.transforms.functional.short_side_scale``.
+    """
+
+    def __init__(
+        self, size: int, interpolation: str = "bilinear", backend: str = "pytorch"
+    ):
+        super().__init__()
+        self._size = size
+        self._interpolation = interpolation
+        self._backend = backend
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Args:
+            x (torch.Tensor): video tensor with shape (C, T, H, W).
+        """
+        return pytorchvideo.transforms.functional.resize(
+            x, self._size, self._interpolation, self._backend
+        )
+
 class RandomResizedCrop(torch.nn.Module):
     """
     ``nn.Module`` wrapper for ``pytorchvideo.transforms.functional.random_resized_crop``.

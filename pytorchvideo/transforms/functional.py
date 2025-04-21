@@ -515,6 +515,42 @@ def _get_param_spatial_crop(
     return i, j, h, w
 
 
+def resize(
+        x: torch.Tensor,
+        size: int,
+        interpolation: str = "bilinear",
+        backend: str = "pytorch",
+) -> torch.Tensor:
+    """
+
+    Args:
+        x (torch.Tensor): A video tensor of shape (C, T, H, W) and type torch.float32.
+        size (int): The size the shorter side is scaled to.
+        interpolation (str): Algorithm used for upsampling,
+            options: nearest' | 'linear' | 'bilinear' | 'bicubic' | 'trilinear' | 'area'
+        backend (str): backend used to perform interpolation. Options includes
+            `pytorch` as default, and `opencv`. Note that opencv and pytorch behave
+            differently on linear interpolation on some versions.
+            https://discuss.pytorch.org/t/pytorch-linear-interpolation-is-different-from-pil-opencv/71181
+    Returns:
+        An x-like Tensor with scaled spatial dims.
+    """  # noqa
+    assert len(x.shape) == 4
+    assert x.dtype == torch.float32
+    assert backend in ("pytorch", "opencv")
+
+    new_h = size
+    new_w = size
+
+    if backend == "pytorch":
+        return torch.nn.functional.interpolate(
+            x, size=(new_h, new_w), mode=interpolation, align_corners=False
+        )
+    elif backend == "opencv":
+        return _interpolate_opencv(x, size=(new_h, new_w), interpolation=interpolation)
+    else:
+        raise NotImplementedError(f"{backend} backend not supported.")
+
 def random_resized_crop(
     frames: torch.Tensor,
     target_height: int,

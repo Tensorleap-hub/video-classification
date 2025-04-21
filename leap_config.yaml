@@ -1,0 +1,22 @@
+mean: [0.45, 0.45, 0.45]
+std: [0.225, 0.225, 0.225]
+frames_per_second: 30
+
+train_size_limit: 4140
+val_size_limit: 247
+test_size_limit: 468
+
+model_transform_params:
+  side_size: 256
+  crop_size: 256
+  num_frames: 16
+  sampling_rate: 5
+
+dataset_splits_paths:
+  train: "kinetics-400/splits/partial_train.txt"
+  val: "kinetics-400/splits/partial_val.txt"
+  test: "kinetics-400/splits/partial_test.txt"
+
+dataset_path_from_root: "kinetics-400"
+bucket_name: "tensorleap-assets"
+aws_data_root_path: "public-datasets/kinetics400/kinetics-partial"
