@@ -13,9 +13,9 @@ model_transform_params:
   sampling_rate: 5
 
 dataset_splits_paths:
-  train: "kinetics-400/splits/partial_train.txt"
-  val: "kinetics-400/splits/partial_val.txt"
-  test: "kinetics-400/splits/partial_test.txt"
+  train: "splits/partial_train.txt"
+  val: "splits/partial_val.txt"
+  test: "splits/partial_test.txt"
 
 dataset_path_from_root: "kinetics-400"
 bucket_name: "tensorleap-assets"

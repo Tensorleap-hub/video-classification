@@ -73,7 +73,8 @@ def download_sample_index_from_dataset(idx, dataset):
 def download_from_s3(s3_relative_file_path):
     aws_data_root_path = CONFIG["aws_data_root_path"]
     # Construct the local file path
-    local_file_path = get_full_path(s3_relative_file_path)
+    local_relative_path_from_root = os.path.join(CONFIG["dataset_path_from_root"], s3_relative_file_path)
+    local_file_path = get_full_path(local_relative_path_from_root)
     if os.path.exists(local_file_path):
         return local_file_path
 
@@ -99,8 +100,8 @@ def get_datasets():
         download_from_s3(CONFIG["dataset_splits_paths"][split]) # Download the split txt files if they don't exist
         datasets[split] = (
             Kinetics(
-                data_path=get_full_path(CONFIG["dataset_splits_paths"][split]),
-                video_path_prefix=get_full_path(split),
+                data_path=get_full_path(os.path.join(CONFIG["dataset_path_from_root"], CONFIG["dataset_splits_paths"][split])),
+                video_path_prefix=get_full_path(os.path.join(CONFIG["dataset_path_from_root"], split)),
                 clip_sampler=ConstantClipsPerVideoSampler(CONFIG["clip_duration"], 1),
                 transform=_make_transforms(),
                 video_sampler=RandomSampler)
