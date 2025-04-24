@@ -65,7 +65,7 @@ def get_full_path(path) -> str:
         return os.path.join(os.path.expanduser("~/tensorleap/data"), path)
 
 def download_sample_index_from_dataset(idx, dataset):
-    aws_path = dataset._labeled_videos[idx][0].lstrip(get_full_path(CONFIG["dataset_path_from_root"]))
+    aws_path = os.path.relpath(dataset._labeled_videos[idx][0], get_full_path(CONFIG["dataset_path_from_root"]))
     local_path = download_from_s3(aws_path)
     if local_path is not None and not os.path.exists(local_path):
         raise RuntimeError("Failed to download video from AWS bucket")
