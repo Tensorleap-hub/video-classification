@@ -1,6 +1,8 @@
-# 🎥 Video Classification Demo with Tensorleap
+# 🎥 Action Recognition Demo with Tensorleap
 
-This guide will help you run the video classification demo using Tensorleap. Follow the steps below to set up the environment, run tests locally, and deploy the project to Tensorleap's platform.
+This guide will help you run the action recognition demo using Tensorleap.
+
+Follow the steps below to set up the environment, run tests locally, and deploy the project to Tensorleap's platform.
 
 ---
 
@@ -24,7 +26,7 @@ poetry install
 ### 4. Run a local test
 Make sure Tensorleap’s integration works on your machine:
 ```
-poetry run python leap_custom_test.py
+poetry run test
 ```
 
 ## 🔧 Install Tensorleap CLI
@@ -36,7 +38,7 @@ leap server install
 ## 🔐 Authenticate with Tensorleap
 
 ### 🔑 Generate a CLI Token
-1.	Request demo access from Tensorleap.
+1.	[Request demo access](https://tensorleap.ai/request-demo/) from Tensorleap.
 2.	After getting access, in the Tensorleap UI, open the menu (top-left).
 3.	Click CLI TOKEN → YES, DISABLE MY OLD TOKEN AND GENERATE A NEW ONE.
 4.	Copy the generated token to your clipboard
@@ -47,7 +49,7 @@ tensorleap auth login <API_KEY> <API_URL>
 ```
 2. Run it to authenticate with Tensorlaep
 
-## 🚢 Deploy the Project
+## 🚢 Deploy Your Local Changes to the Project
 ```
 leap projects push models/x3d.h5
 ```
