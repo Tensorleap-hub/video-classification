@@ -1,0 +1,154 @@
+decorators:
+  - operation: Input
+    data:
+      type: Input
+      output_name: video
+    id: '92'
+    inputs: {}
+    outputs:
+      video:
+        - inputKey: input
+          operation: Permute
+          name: permute_235
+          id: '91'
+        - inputKey: frames
+          operation: Visualizer
+          id: '586'
+        - inputKey: frames
+          operation: Visualizer
+          id: '585'
+  - operation: Metric
+    data:
+      type: Metric
+      name: predicted_label
+      metric_name: predicted_label
+      arg_names:
+        - pred
+      user_unique_name: predicted_label
+    id: '581'
+    inputs:
+      pred:
+        - outputKey: feature_map
+          operation: Reshape
+          name: blocks.5/Reshape_tl_reshape_input_2_2
+          id: '1'
+    outputs: {}
+  - operation: Metric
+    data:
+      type: Metric
+      name: accuracy
+      metric_name: accuracy
+      arg_names:
+        - predictions
+        - targets
+      user_unique_name: accuracy
+    id: '582'
+    inputs:
+      predictions:
+        - outputKey: feature_map
+          operation: Reshape
+          name: blocks.5/Reshape_tl_reshape_input_2_2
+          id: '1'
+      targets:
+        - outputKey: label
+          operation: GroundTruth
+          id: '584'
+    outputs: {}
+  - operation: Metric
+    data:
+      type: Metric
+      name: ConfusionMatrixClassification
+      metric_name: ConfusionMatrixClassification
+      arg_names:
+        - ground_truth
+        - prediction
+      user_unique_name: ConfusionMatrixClassification
+    id: '583'
+    inputs:
+      prediction:
+        - outputKey: feature_map
+          operation: Reshape
+          name: blocks.5/Reshape_tl_reshape_input_2_2
+          id: '1'
+      ground_truth:
+        - outputKey: label
+          operation: GroundTruth
+          id: '584'
+    outputs: {}
+  - operation: GroundTruth
+    data:
+      type: GroundTruth
+      output_name: label
+      selected: label
+    id: '584'
+    inputs: {}
+    outputs:
+      label:
+        - inputKey: ground_truth
+          operation: Metric
+          id: '583'
+        - inputKey: targets
+          operation: Metric
+          id: '582'
+        - inputKey: targets
+          operation: CustomLoss
+          id: '587'
+  - operation: Visualizer
+    data:
+      type: Visualizer
+      name: frame
+      visualizer_name: frame
+      visualizer_type: Image
+      arg_names:
+        - frames
+      user_unique_name: frame
+    id: '585'
+    inputs:
+      frames:
+        - outputKey: video
+          operation: Input
+          id: '92'
+    outputs: {}
+  - operation: Visualizer
+    data:
+      type: Visualizer
+      name: frames_grid
+      visualizer_name: frames_grid
+      visualizer_type: Image
+      arg_names:
+        - frames
+      user_unique_name: frames_grid
+    id: '586'
+    inputs:
+      frames:
+        - outputKey: video
+          operation: Input
+          id: '92'
+    outputs: {}
+  - operation: CustomLoss
+    data:
+      arg_names:
+        - predictions
+        - targets
+      user_unique_name: cross_entropy_loss
+      name: cross_entropy_loss
+      selected: cross_entropy_loss
+      type: CustomLoss
+    id: '587'
+    inputs:
+      predictions:
+        - outputKey: feature_map
+          operation: Reshape
+          name: blocks.5/Reshape_tl_reshape_input_2_2
+          id: '1'
+      targets:
+        - outputKey: label
+          operation: GroundTruth
+          id: '584'
+    outputs: {}
+layers:
+  - operation: Reshape
+    data:
+      prediction_type: classes
+    name: blocks.5/Reshape_tl_reshape_input_2_2
+    id: '1'
