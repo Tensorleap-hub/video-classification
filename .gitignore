@@ -1,5 +1,12 @@
 *.DS_Store
 
+# IDE and editor directories
+.vscode/
+.claude/
+
+# Python version management
+.python-version
+
 build/
 _ext
 *.pyc
