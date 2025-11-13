@@ -1,8 +1,9 @@
-codeIntegrationId: 67f65898e72bba00afd0f8c2
-projectId: 67f6586be72bba00afd0f8bc
+codeIntegrationId: 6911b2e6c665be463a499cce
+projectId: 6911b2ddc665be463a499cc7
 secretId: ""
-entryFile: leap_binder.py
+entryFile: leap_integration.py
 include:
+    - leap_integration.py
     - leap_binder.py
     - leap_config.py
     - leap_config.yaml
