@@ -7,7 +7,7 @@ from code_loader.plot_functions.visualize import visualize
 
 import kinetics_classes
 from leap_binder import preprocess_func, input_encoder, gt_encoder, cross_entropy_loss
-from leap_visualizers import frame_visualzier, frames_grid_visualzier, label_visualizer
+from leap_visualizers import frame_visualzier, frames_grid_visualzier, label_visualizer, video_visualizer
 from leap_metrics import accuracy, get_predicted_label
 from leap_metadata import sample_metadata
 
@@ -37,13 +37,13 @@ def check_integration(idx, subset, plot=True):
     predictions = model([video])
 
     # 3. Call visualizers (defines visualizer connections)
-    frame_vis = frame_visualzier(video)
+    video_vis = video_visualizer(video)
     grid_vis = frames_grid_visualzier(video)
     label_vis = label_visualizer(predictions, gt)
 
     # Visualize for debugging/sanity check
     if plot:
-        visualize(frame_vis, "Single Frame")
+        visualize(video_vis, "Video")
         visualize(grid_vis, "Frame Grid (4x4)")
 
     # 4. Call metrics (defines metric connections)

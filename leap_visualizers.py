@@ -3,6 +3,8 @@ from numpy.typing import NDArray
 import torch
 from torch.nn import functional as F
 import kinetics_classes
+from code_loader.contract.visualizer_classes import LeapVideo, LeapImage, LeapHorizontalBar, LeapImageWithHeatmap
+from code_loader.visualizers.default_visualizers import default_video_visualizer
 
 def add_col_padding(image: np.array, np_dtype: str = 'uint8') -> np.array:
     padded_columns = np.zeros(shape=(image.shape[0], 5, image.shape[2])).astype(np_dtype)
@@ -107,14 +109,21 @@ def frame_heatmap(frames: NDArray[np.float32]) -> LeapImage:
     return frames[0, 0, ...]
 
 
-@tensorleap_custom_visualizer('frame', visualizer_type=LeapDataType.Image, heatmap_function=frame_heatmap)
-def frame_visualzier(frames: np.ndarray) -> LeapImage:
-    frames = frames.squeeze(0)
-    frames = frames.transpose(3,0,1,2)
-    frame = frames[:, 0, ...].transpose(1, 2, 0)
-    frame = ((frame - frame.min()) / (frame.max() - frame.min()) * 255).astype(np.uint8)
+@tensorleap_custom_visualizer('frame', visualizer_type=LeapDataType.ImageWithHeatmap, heatmap_function=frame_heatmap)
+def frame_visualzier(frames: np.ndarray) -> LeapImageWithHeatmap:
+    frame = frames[0, 0, ...]
+
+    # 2. Linear Scaling to 0-255
+    f_min, f_max = frame.min(), frame.max()
+    frame = ((frame - f_min) / (f_max - f_min) * 255).astype(np.uint8)
+
     return LeapImage(frame)
 
+@tensorleap_custom_visualizer('video', visualizer_type=LeapDataType.Video)
+def video_visualizer(frames: NDArray[np.float32]) -> LeapVideo:
+    # frames = frames[..., [2, 1, 0]]  # Convert from RGB to BGR - needed for Tensorleap platform video player. Player should be updated to support RGB in the future and this conversion can be removed.
+    frames = ((frames - frames.min()) / (frames.max() - frames.min()) * 255).astype(np.uint8)
+    return default_video_visualizer(frames)
 
 @tensorleap_custom_visualizer('label', visualizer_type=LeapDataType.HorizontalBar)
 def label_visualizer(pred: NDArray[np.float32], gt: NDArray[np.float32]) -> LeapHorizontalBar:
